@@ -1,0 +1,17 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: nayaashb
+      POSTGRES_PASSWORD: Ashu@9348
+      POSTGRES_DB: godzilla-db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

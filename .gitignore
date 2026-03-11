@@ -209,3 +209,7 @@ __marimo__/
 # Created test files
 req.md
 test.py
+
+# keys
+private.pem
+public.pem

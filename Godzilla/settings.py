@@ -1,8 +1,14 @@
 from pathlib import Path
+from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-&jy%c*)sv#2pnn51=13%k#p(fds%lz@a+p8)zifl(##7+s^puj"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
@@ -18,6 +24,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "core",
     "rest_framework",
+    "rest_framework_simplejwt",
+    
     
 ]
 
@@ -88,3 +96,34 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+# How Microservices authenticate with each other ? 
+
+# JWKS (JSON Web Key Set)(SIGNING_KEY and VERIFYING_KEY)
+#     The Auth service exposes a public endpoint (usually /.well-known/jwks.json) that returns a list of active public keys in JSON format.
+#     How it works: On startup or periodically, microservices fetch these keys and cache them locally.
+#     Advantage: Allows for seamless key rotation without redeploying every service.
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(hours=18),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": os.getenv('SIGNING_KEY'),
+    "VERIFYING_KEY": os.getenv('VERIFYING_KEY'),
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION"
+}

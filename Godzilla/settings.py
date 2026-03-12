@@ -25,8 +25,6 @@ INSTALLED_APPS = [
     "core",
     "rest_framework",
     "rest_framework_simplejwt",
-    
-    
 ]
 
 MIDDLEWARE = [
@@ -114,8 +112,8 @@ REST_FRAMEWORK = {
 #     Advantage: Allows for seamless key rotation without redeploying every service.
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(hours=18),
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=48),
+    "REFRESH_TOKEN_LIFETIME": timedelta(hours=96),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,

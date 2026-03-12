@@ -10,6 +10,7 @@ dependencies = [
     "djangorestframework>=3.16.1",
     "djangorestframework-simplejwt>=5.5.1",
     "markdown>=3.10.2",
+    "model-bakery>=1.23.3",
     "psycopg[binary]>=3.3.3",
     "python-dotenv>=1.2.2",
     "requests>=2.32.5",

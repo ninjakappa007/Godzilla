@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import DeviceDetailsModel, DeviceTransactionModel
+from core.models import DeviceDetailsModel, DeviceTransactionModel
+from core.models import DeviceTransactionTypes
 
 
 # Documentation : https://www.django-rest-framework.org/api-guide/serializers/
@@ -40,3 +41,10 @@ class DeviceWriteSerializer(serializers.ModelSerializer):
         if value in DeviceDetailsModel.objects.values_list('serial_number', flat=True):
             raise serializers.ValidationError('Serial number already exists')
         return value
+    
+class TransactionSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+    
+    class Meta:
+        model = DeviceTransactionModel
+        fields = ['id' ,'device', 'type']
